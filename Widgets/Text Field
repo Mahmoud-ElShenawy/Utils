@@ -1,0 +1,114 @@
+class TextField extends StatelessWidget {
+  TextEditingController controller = new TextEditingController();
+  String label = "";
+  FocusNode focusNode;
+  bool obscure;
+  EdgeInsetsGeometry padding;
+  bool haveIcon;
+  Widget icon;
+  Function iconPressed;
+  bool enabled;
+  Color color;
+  bool isWithBorders;
+  bool isLtr;
+  String error;
+  double width;
+  int minLines;
+  TextInputType textType;
+  int maxLength;
+  Function onTextChange;
+  bool isCenter ;
+
+  TextField(
+      {this.color = FONT_PRIMARY_COLOR,
+      this.controller,
+      this.label,
+      this.focusNode,
+      this.obscure = false,
+      this.padding,
+      this.haveIcon = false,
+      this.icon,
+      this.iconPressed,
+      this.enabled = true,
+      this.isWithBorders = true,
+      this.isLtr = true,
+      this.error = "",
+      this.textType = TextInputType.text,
+      this.minLines = 1,
+      this.width,
+      this.maxLength,
+      this.onTextChange,
+      this.isCenter=false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding ?? EdgeInsets.symmetric(vertical: 8),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  onChanged: this.onTextChange,
+                  enabled: this.enabled,
+                  textAlign: isCenter ?TextAlign.center : TextAlign.start,
+                  controller: this.controller,
+                  focusNode: this.focusNode?? FocusNode(),
+                  obscureText: obscure,
+                  maxLength: maxLength,
+                  keyboardType: textType,
+                  style: TextStyle(color: this.color),
+                  decoration: InputDecoration(
+                    labelText: label,
+                    labelStyle: TextStyle(color: this.color),
+                    border: !isWithBorders
+                        ? InputBorder.none
+                        : new UnderlineInputBorder(
+                            borderSide: new BorderSide(color: this.color)),
+                    enabledBorder: !isWithBorders
+                        ? InputBorder.none
+                        : new UnderlineInputBorder(
+                            borderSide: new BorderSide(color: this.color)),
+                    disabledBorder: !isWithBorders
+                        ? InputBorder.none
+                        : new UnderlineInputBorder(
+                            borderSide: new BorderSide(color: this.color)),
+                  ),
+                ),
+                error.isEmpty
+                    ? Container()
+                    : SizedBox(
+                        height: 8,
+                      ),
+                error.isEmpty
+                    ? Container()
+                    : Text(
+                        error,
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+              ],
+            ),
+          ),
+          this.haveIcon
+              ? Positioned.directional(
+                  end: 3,
+                  bottom: 6,
+                  child: InkWell(
+                    onTap: this.iconPressed,
+                    child: this.icon == null ? Container() : this.icon,
+                  ),
+                  textDirection:
+                      this.isLtr ? TextDirection.ltr : TextDirection.rtl,
+                )
+              : Container()
+        ],
+      ),
+    );
+  }
+}
