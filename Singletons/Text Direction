@@ -1,0 +1,8 @@
+import 'dart:ui';
+
+TextDirection getTextDirection(String lang){
+  return lang == "ar" ? TextDirection.rtl : TextDirection.ltr ;
+}
+
+get ltr  => TextDirection.ltr ;
+get rtl  => TextDirection.rtl ;
