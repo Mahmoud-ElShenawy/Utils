@@ -1,0 +1,157 @@
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:http/http.dart'as http;
+
+class ApiProvider {
+
+  static ApiProvider _instance = new ApiProvider.internal();
+  ApiProvider.internal();
+
+  String baseURL = 'URL';
+  Dio dio = Dio();
+
+  factory ApiProvider() => _instance;
+
+  Future<Response> get(String url) async {
+    var response;
+    try {
+      dio.options.baseUrl = baseURL;
+      dio.options.headers['content-Type'] = 'application/json';
+      if(appUserToken != null){
+        dio.options.headers["authorization"] = appUserToken;
+      }
+      response = await dio.get(url);
+      print(response);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        response = e.response;
+        print('Response: ${e.response.toString()});
+      } else {
+        print('Error' );
+      }
+    }
+    return handleResponse(response);
+  }
+
+  Future<Response> delete(String url, {Map headers}) {
+    return dio
+        .delete(
+      url,
+      options: Options(headers: headers),
+    )
+        .then((Response response) {
+      return handleResponse(response);
+    });
+  }
+
+  Future<Response> put(String url, {Map headers, body, encoding}) {
+    return dio
+        .put(url,
+        data: body,
+        options: Options(headers: headers, requestEncoder: encoding))
+        .then((Response response) {
+      return handleResponse(response);
+    });
+  }
+
+  Response handleResponse(Response response) {
+    final int statusCode = response.statusCode;
+    print(statusCode);
+    print('Response : " + response.toString());
+    if (statusCode == 401) {
+      throw new Exception('Unauthorized');
+    } else if (statusCode != 200) {
+      throw new Exception('Error while fetching data');
+    }
+
+    if (statusCode >= 200 && statusCode < 300) {
+      return response;
+    } else {
+      return response;
+    }
+  }
+
+  Future<Response> getAddress(String lat,String lng) async{
+    var response;
+    try {
+      dio.options.baseUrl = 'URL';
+      dio.options.headers['content-Type'] = 'application/json';
+      response = await dio.get("");
+    } on DioError catch (e) {
+      if (e.response != null) {
+        response = e.response;
+        print('Response: ${e.response.toString()});
+      } else {
+      print('Error:  ${e.response.toString()');
+      }
+    }
+    return handleResponse(response);
+  }
+
+  Future<dynamic> postPhoto(String url,Map<String,String> data,String imageKey ,String imageValue) async {
+    print("imge");
+    var res;
+    http.StreamedResponse response;
+    try {
+       var request = http.MultipartRequest('POST', Uri.parse(baseURL + url));
+
+       if(appUserToken != null){
+         request.headers["authorization"] = appUserToken;
+       }
+       // data.forEach((key, value) {
+       //   request.fields[key]=value;
+       // });
+       request.fields.addAll(data);
+       if (imageValue!=null){
+         request.files.add(await http.MultipartFile.fromPath(
+             imageKey,
+             imageValue
+         )
+         );
+       }
+
+         response = await request.send();
+         var respStr = await response.stream.bytesToString();
+         final Map<String, dynamic> result = jsonDecode(respStr);
+         print(result);
+
+         if(response.statusCode==200&&result['status']){
+           res = {
+             "status":true,
+             "msg":result['msg'],
+             "result":result,
+           };
+         }else{
+           res = {
+             "status":false,
+             "msg":result['msg'],
+           };
+         }
+
+    } on DioError catch (e) {
+
+    }
+    return res;
+    }
+
+  Future<Response> post(String url, var body) async {
+    print(body);
+    var response;
+    try {
+      if(appUserToken != null){
+        dio.options.headers["authorization"] = appUserToken;
+      }
+      response = await dio.post(baseURL+url,data: body);
+      print(response);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        response = e.response;
+        print('Response: ${e.response.toString()});
+      } else {
+        print('Error');
+      }
+    }
+    print(response);
+    return handleResponse(response);
+  }
+}
