@@ -1,0 +1,137 @@
+    bool _light = false;
+
+  
+  ThemeData _lightTheme = ThemeData(
+      fontFamily: 'Jana',
+      accentColor: Theme.Colors.blue,
+      cursorColor: Theme.Colors.red,
+      primaryColor: Theme.Colors.white,
+      brightness: Brightness.light,
+      backgroundColor: Theme.Colors.white,
+      iconTheme: IconThemeData(color: Theme.Colors.black54),
+      accentIconTheme: IconThemeData(color: Theme.Colors.red),
+      primaryIconTheme: IconThemeData(color: Theme.Colors.green),
+      appBarTheme: AppBarTheme(
+        elevation: 2,
+        iconTheme: IconThemeData(color: Theme.Colors.black54),
+        textTheme: TextTheme(
+          headline6: TextStyle(
+              fontSize: Dimens.kPadding45,
+              color: Theme.Colors.white,
+              fontFamily: 'Jana',
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+      bottomAppBarTheme: BottomAppBarTheme(
+        color: Theme.Colors.white,
+        shape: CircularNotchedRectangle(),
+        elevation: Dimens.kPadding50,
+      ),
+      textTheme: TextTheme(
+        bodyText2: TextStyle(
+            fontSize: Dimens.kSize14,
+            color: Theme.Colors.black,
+            fontFamily: 'Jana'),
+      ),
+      tabBarTheme: TabBarTheme(
+        labelColor: Theme.Colors.blue,
+        unselectedLabelColor: Theme.Colors.black54,
+        labelStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Jana',
+            fontSize: Dimens.kSize12),
+        unselectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Jana',
+            fontSize: Dimens.kPadding10),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        hoverColor: Theme.Colors.blue,
+        fillColor: Theme.Colors.grey.withOpacity(0.05),
+        focusColor: Theme.Colors.amber,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.Colors.blue),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Theme.Colors.blue),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.Colors.blue),
+        ),
+      ),
+      cardTheme: CardTheme(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(0),
+            topRight: Radius.circular(0),
+            topLeft: Radius.circular(0),
+            bottomLeft: Radius.circular(0),
+          ),
+          side: BorderSide(
+              width: 1, color: Theme.Colors.black54.withOpacity(0.2)),
+        ),
+      ),
+      cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark));
+
+  ThemeData _darkTheme = ThemeData(
+      fontFamily: 'Jana',
+      accentColor: Theme.Colors.blue,
+      cursorColor: Theme.Colors.red,
+      primaryColor: Theme.Colors.black,
+      brightness: Brightness.dark,
+      backgroundColor: Theme.Colors.black45,
+      iconTheme: IconThemeData(color: Theme.Colors.white),
+      accentIconTheme: IconThemeData(color: Theme.Colors.red),
+      primaryIconTheme: IconThemeData(color: Theme.Colors.white),
+      appBarTheme: AppBarTheme(
+        elevation: 2,
+        textTheme: TextTheme(
+          headline6: TextStyle(
+            fontSize: Dimens.kPadding45,
+            color: Theme.Colors.white,
+            fontFamily: 'Jana',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      bottomAppBarTheme:
+          BottomAppBarTheme(shape: CircularNotchedRectangle(), elevation: Dimens.kPadding50),
+      textTheme: TextTheme(
+        bodyText2:
+            TextStyle(fontSize: Dimens.kSize14, color: Theme.Colors.white, fontFamily: 'Jana'),
+      ),
+      tabBarTheme: TabBarTheme(
+        labelColor: Theme.Colors.blue,
+        unselectedLabelColor: Theme.Colors.white,
+        labelStyle: TextStyle(
+            fontWeight: FontWeight.bold, fontFamily: 'Jana', fontSize: Dimens.kSize12),
+        unselectedLabelStyle: TextStyle(
+            fontWeight: FontWeight.bold, fontFamily: 'Jana', fontSize: Dimens.kPadding10),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        hoverColor: Theme.Colors.blue,
+        fillColor: Colors.grey.withOpacity(0.05),
+        focusColor: Theme.Colors.amber,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.Colors.blue),
+        ),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: Theme.Colors.blue),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Theme.Colors.blue),
+        ),
+      ),
+      cardTheme: CardTheme(
+        color: Theme.Colors.white.withOpacity(0.1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(0),
+            topRight: Radius.circular(0),
+            topLeft: Radius.circular(0),
+            bottomLeft: Radius.circular(0),
+          ),
+          side: BorderSide(width: 1, color: Theme.Colors.white.withOpacity(0.2)),
+        ),
+      ),
+      cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.light));
