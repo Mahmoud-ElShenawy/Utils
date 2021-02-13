@@ -1,0 +1,129 @@
+import 'Text Direction Singleton';
+import 'Text Field Custom Widget';
+import 'package:flutter/material.dart';
+
+
+
+class VerificationCodeWidget extends StatefulWidget {
+  Function onCodeChange ;
+  String error ;
+  VerificationCodeWidget({this.onCodeChange ,this.error});
+
+  @override
+  _VerificationCodeWidgetState createState() {
+    return _VerificationCodeWidgetState();
+  }
+}
+
+class _VerificationCodeWidgetState extends State<VerificationCodeWidget> {
+
+  FocusNode pin1 = new FocusNode();
+  FocusNode pin2 = new FocusNode();
+  FocusNode pin3 = new FocusNode();
+  FocusNode pin4 = new FocusNode();
+  FocusNode pin5 = new FocusNode();
+
+  TextEditingController controllerPin1 = new TextEditingController();
+  TextEditingController controllerPin2= new TextEditingController();
+  TextEditingController controllerPin3 =new TextEditingController();
+  TextEditingController controllerPin4 = new TextEditingController();
+  TextEditingController controllerPin5 = new TextEditingController();
+
+  List<FocusNode> pinFocus = new List();
+  List<TextEditingController> textsControllers = new List();
+
+  @override
+  void initState() {
+    super.initState();
+    pinFocus = [pin1 , pin2 ,pin3 ,pin4 ,pin5];
+    textsControllers = [controllerPin1, controllerPin2 ,controllerPin3 ,controllerPin4 ,controllerPin5];
+  }
+
+  _onSinglePinChange(int number , String text){
+
+    if(text.isNotEmpty){
+      if(number != 4)
+        pinFocus[number+1].requestFocus();
+    }else{
+      if(number!=0)
+        pinFocus[number-1].requestFocus();
+    }
+    String sendText = "" ;
+    textsControllers.forEach((element) {
+      sendText += element.text ;
+    });
+    widget.onCodeChange(sendText);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Directionality(
+          textDirection: ltr,
+          child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ShopinTextField(
+                  width: 50,
+                  maxLength: 1,
+                  focusNode: pin1,
+                  isCenter: true,
+                  controller: controllerPin1,
+                  textType: TextInputType.number,
+                  onTextChange: (text)=>_onSinglePinChange(0, text),
+                ),
+                ShopinTextField(
+                  width: 50,
+                  maxLength: 1,
+                  focusNode: pin2,
+                  isCenter: true,
+                  controller: controllerPin2,
+                  textType: TextInputType.number,
+                  onTextChange: (text)=>_onSinglePinChange(1, text),
+                ),
+                ShopinTextField(
+                  width: 50,
+                  maxLength: 1,
+                  focusNode: pin3,
+                  isCenter: true,
+                  controller: controllerPin3,
+                  textType: TextInputType.number,
+                  onTextChange: (text)=>_onSinglePinChange(2, text),
+                ),
+                ShopinTextField(
+                  width: 50,
+                  maxLength: 1,
+                  focusNode: pin4,
+                  isCenter: true,
+                  controller: controllerPin4,
+                  textType: TextInputType.number,
+                  onTextChange: (text)=>_onSinglePinChange(3, text),
+                ),
+                ShopinTextField(
+                  width: 50,
+                  maxLength: 1,
+                  focusNode: pin5,
+                  isCenter: true,
+                  controller: controllerPin5,
+                  textType: TextInputType.number,
+                  onTextChange: (text)=>_onSinglePinChange(4, text),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Text(widget.error ??"" ,style: TextStyle(fontSize: 12 , fontWeight: FontWeight.bold ,color: Colors.red),),
+        SizedBox(height: 8,)
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+}
