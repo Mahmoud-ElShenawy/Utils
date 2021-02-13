@@ -122,6 +122,11 @@ Future<String> getLanguage() async {
   return lang;
 }
 
+  void saveLang(String lang) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("language", lang);
+  }
+
 changeLanguage({@required String lang, @required BuildContext context}) async {
   SharedPreferences _pref = await SharedPreferences.getInstance();
   int selectedLangIndex = lang == "en" ? 0 : 1;
