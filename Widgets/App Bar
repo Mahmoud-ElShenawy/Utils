@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'Colors Singleton'
+
+PreferredSize AppBar({List<Widget> actions , String title}){
+  return  PreferredSize(
+    child: Container(
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.white,
+          offset: Offset(0, 2.0),
+          blurRadius: 12.0,
+        )
+      ]),
+      child: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text(title),
+        backgroundColor: PRIMARY_COLOR,
+        actions: actions,
+      ),
+
+    ),
+    preferredSize: Size.fromHeight(kToolbarHeight),
+  );
+}
+
+PreferredSize AppBar({List<Widget> actions , String title , Widget leading , bool isWithShadow = true}){
+  return  PreferredSize(
+      child: AppBar(
+        elevation: 3.0,
+        centerTitle: true,
+        title: Text(title , style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.white,
+        actions: actions,
+          leading: leading,
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          )
+      ),
+    preferredSize: Size.fromHeight(kToolbarHeight),
+  );
+}
