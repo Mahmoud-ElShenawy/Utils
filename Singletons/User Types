@@ -1,0 +1,31 @@
+import 'package:easy_localization/easy_localization.dart';
+
+class UserTypes{
+  static const int USER=1;
+  static const int VENDOR=2;
+  static const String VENDOR_STRING="vendor";
+  static const String USER_STRING="user";
+}
+
+class OrderStatus{
+  static const int NEW=0;
+  static const int CONFIRMED=1;
+  static const int UNDERWAY=2;
+  static const int REJECTED=3;
+  static const int DONE=4;
+  static String getStatusString(int status){
+    switch (status){
+      case NEW:return "new".tr();
+      case CONFIRMED:return "confirmed".tr();
+      case UNDERWAY:return "underway".tr();
+      case REJECTED:return "rejected".tr();
+      case DONE:return "done".tr();
+      default:return "";
+   }
+  }
+}
+
+class MessageTypes{
+  static const int TEXT=1;
+  static const int FILE=2;
+}
