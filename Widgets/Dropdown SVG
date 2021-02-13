@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class DropDown {
+  String name;
+  dynamic object;
+
+  DropDownModel({this.name, this.object});
+}
+
+class DropDown extends StatefulWidget {
+  String label;
+  String inputIconSVG;
+  String error;
+  String leadingIconSVG;
+  String lastIconSVG;
+  
+  EdgeInsets padding;
+  
+  TextStyle textStyle;
+  
+  double height;
+  double width;
+
+  List<DropDownModel> items;
+
+  Function onSelectItem;
+
+  DropDown(
+      {this.label,
+      this.leadingIconSVG,
+      this.padding,
+      this.textStyle,
+      this.height = 40,
+      this.width,
+      this.lastIconSVG,
+      this.items,
+      this.onSelectItem,
+      this.error});
+
+  @override
+  _CoursesDropdownState createState() {
+    return DropDown();
+  }
+}
+
+class DropDown extends State<DropDown> {
+  dynamic value;
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.items != null ? widget.items[0].object : null;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: widget.padding ??
+          const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  widget.label ?? "",
+                  style: TextStyle(color: Colors.white),
+                )),
+            SizedBox(
+              height: 8,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              height: widget.height,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  widget.leadingIconSVG == null
+                      ? Container()
+                      : SvgPicture.asset(
+                          widget.leadingIconSVG,
+                          width: 20,
+                          height: 20,
+                        ),
+                  widget.leadingIconSVG == null
+                      ? Container()
+                      : SizedBox(
+                          width: 16,
+                        ),
+                  DropdownButton(
+                    underline: Container(),
+                    value: this.value,
+                    items: widget.items.map((DropDownModel value) {
+                      return new DropdownMenuItem(
+                        value: value.object,
+                        child: Center(
+                          child: Container(
+                              width: widget.leadingIconSVG == null
+                                  ? widget.width - 16
+                                  : widget.width - 36,
+                              child: Align(
+                                  alignment: AlignmentDirectional.centerStart,
+                                  child: Text(
+                                    value.name,
+                                    style: widget.textStyle,
+                                  ))),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() => this.value = value);
+                      widget.onSelectItem(value);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  widget.error ?? "",
+                  style: TextStyle(fontSize: 10, color: Colors.red),
+                )),
+          ],
+        ),
+      ),
+    );
+    ;
+  }
+}
