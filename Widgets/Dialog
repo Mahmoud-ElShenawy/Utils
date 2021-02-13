@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+
+showDialog({@required BuildContext context ,  Widget child , double opacity = 0.5 }){
+  showGeneralDialog(
+    barrierLabel: "Label",
+    barrierDismissible: true,
+    barrierColor: Colors.black.withOpacity(opacity),
+    transitionDuration: Duration(milliseconds: 100),
+    context: context,
+    pageBuilder: (context, anim1, anim2) {
+      return child ;
+    },
+    transitionBuilder: (context, anim1, anim2, child) {
+      return FadeTransition(
+        opacity: Tween<double>(begin: 0.0, end: 1.0)
+            .animate(anim1),
+        child: child,
+      );
+    },
+  );
+}
