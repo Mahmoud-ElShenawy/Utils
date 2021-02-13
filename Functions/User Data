@@ -145,3 +145,36 @@ enum DataTypes {
   USER_TYPE_INT,
 }
 
+---------------------------Or------------------------
+import 'package:shared_preferences/shared_preferences.dart';
+
+List<Map> items = new List();
+List<String> itemIDs = new List();
+List<String> itemCounts = new List();
+List<String> itemTitles = new List();
+List<String> itemImages = new List();
+
+void saveItems() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setStringList("itemIDs", itemIDs);
+  prefs.setStringList("itemCounts", itemCounts);
+  prefs.setStringList("itemTitles", itemTitles);
+  prefs.setStringList("itemImages", itemImages);
+}
+
+void clearItems() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove("itemIDs");
+  prefs.remove("itemCounts");
+  prefs.remove("itemTitles");
+  prefs.remove("itemImages");
+}
+
+void getSavedItems() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  itemIDs = prefs.getStringList("itemIDs");
+  itemCounts = prefs.getStringList("itemCounts");
+  itemTitles = prefs.getStringList("itemTitles");
+  itemImages = prefs.getStringList("itemImages");
+}
+
