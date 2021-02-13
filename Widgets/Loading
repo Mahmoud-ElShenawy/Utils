@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-LoadingScreen(BuildContext context) {
+loadingScreen(BuildContext context) {
   showDialog(
       context: context,
       barrierDismissible: false,
