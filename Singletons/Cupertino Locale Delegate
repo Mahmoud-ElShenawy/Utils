@@ -15,6 +15,8 @@ class FallbackCupertinoLocalisationsDelegate
   bool shouldReload(FallbackCupertinoLocalisationsDelegate old) => false;
 }
 
+-------------------More----------------
+
 In main screen :-
   SpecificLocalizationDelegate _specificLocalizationDelegate;
   @override
@@ -25,6 +27,8 @@ In main screen :-
     getItems();
   }
   
+    bool _light = false;
+
     void getItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -55,6 +59,7 @@ In main screen :-
   }
 
 In Material App Widget :- 
+
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
