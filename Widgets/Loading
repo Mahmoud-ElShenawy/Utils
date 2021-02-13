@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 loadingScreen(BuildContext context) {
@@ -17,4 +16,29 @@ loadingScreen(BuildContext context) {
           ),
         );
       });
+}
+
+-----------------------Or---------------
+
+class Loading extends StatelessWidget {
+  final double height;
+  final double width;
+
+  Loading({this.height = 50, this.width = 50});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(top: 10),
+        width: this.height,
+        height: this.width,
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(color: Colors.blue, shape: BoxShape.circle),
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+        ),
+      ),
+    );
+  }
 }
