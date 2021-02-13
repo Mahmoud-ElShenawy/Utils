@@ -1,0 +1,10 @@
+Widget getRoundedImage(double radius, {ImageProvider im, Widget child}) {
+  if (im != null)
+    return Container(
+        width: radius * 2.0,
+        height: radius * 2.0,
+        decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            image: new DecorationImage(fit: BoxFit.cover, image: im)));
+  else return ClipRRect(borderRadius: BorderRadius.circular(radius), child: child);
+}
