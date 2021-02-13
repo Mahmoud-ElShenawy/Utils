@@ -1,4 +1,7 @@
-flushBarView(BuildContext context,String message,bool success){
+import 'package:flushbar/flushbar.dart';
+import 'package:flutter/material.dart';
+
+FlushBarView(BuildContext context,String message,bool success){
   Flushbar(
     icon: success? Icon(Icons.check_circle_outline,color: Colors.white,) : Icon(Icons.error_outline,color: Colors.white,),
     shouldIconPulse: success? false : true,
