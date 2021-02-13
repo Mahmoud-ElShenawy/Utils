@@ -1,0 +1,27 @@
+import 'package:flutter/cupertino.dart';
+
+class FallbackCupertinoLocalisationsDelegate
+    extends LocalizationsDelegate<CupertinoLocalizations> {
+  const FallbackCupertinoLocalisationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => true;
+
+  @override
+  Future<CupertinoLocalizations> load(Locale locale) =>
+      DefaultCupertinoLocalizations.load(locale);
+
+  @override
+  bool shouldReload(FallbackCupertinoLocalisationsDelegate old) => false;
+}
+
+In main screen - In Material App Widget :- 
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        // location_picker.delegate,
+        const FallbackCupertinoLocalisationsDelegate(),
+        _specificLocalizationDelegate,
+      ],
+      supportedLocales: [Locale('en'), Locale('ar')],
+      locale: _specificLocalizationDelegate.overriddenLocale,
