@@ -11,3 +11,7 @@ bool isInputArabic(String input) {
   RegExp regExp = new RegExp(p);
   return regExp.hasMatch(input);
 }
+
+bool isValidResponse(int statusCode) {
+return statusCode >= 200 && statusCode <= 302;
+}
