@@ -15,7 +15,46 @@ class FallbackCupertinoLocalisationsDelegate
   bool shouldReload(FallbackCupertinoLocalisationsDelegate old) => false;
 }
 
-In main screen - In Material App Widget :- 
+In main screen :-
+  SpecificLocalizationDelegate _specificLocalizationDelegate;
+  @override
+  void initState() {
+    super.initState();
+    _specificLocalizationDelegate =
+        new SpecificLocalizationDelegate(new Locale("ar"));
+    getItems();
+  }
+  
+    void getItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _light = prefs.getBool('theme') != null ? prefs.getBool('theme') : true;
+    });
+    if (prefs.getString("language") == null) {
+      setState(() {
+        _specificLocalizationDelegate =
+            new SpecificLocalizationDelegate(new Locale("ar"));
+        language = "ar";
+      });
+    } else {
+      setState(() {
+        _specificLocalizationDelegate = new SpecificLocalizationDelegate(
+            new Locale(prefs.getString("language")));
+        language = prefs.getString("language");
+      });
+    }
+    if (prefs.getStringList("itemIDs") != null) {
+      getSavedItems();
+    }
+  }
+  
+    onLocaleChange(Locale locale) {
+    setState(() {
+      _specificLocalizationDelegate = new SpecificLocalizationDelegate(locale);
+    });
+  }
+
+In Material App Widget :- 
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
