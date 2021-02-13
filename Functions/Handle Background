@@ -1,0 +1,21 @@
+import 'dart:io';
+
+void handleBackground(BuildContext context , Map<String,dynamic> message) {
+  if (Platform.isAndroid) {
+    if (message['data'] != null) {
+      print("data != null id = ${message['data']['id']}");
+      Map data = message['data'];
+      if (data.containsKey("id")) {
+        print("id == this.id");
+        'Navigate to screen'
+      }
+    }
+  } else if (Platform.isIOS) {
+    if (message != null) {
+      print("data != null id = ${message['id']}");
+      if (message.containsKey("id")) {
+        print("id == this.id");
+      }
+    }
+  }
+}
