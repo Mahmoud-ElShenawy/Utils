@@ -183,3 +183,87 @@ void getSavedItems() async {
   itemImages = prefs.getStringList("itemImages");
 }
 
+--------------------------Or-----------------------
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'User Model';
+
+Future<bool> setUserData({@required String jsonUser}) async {
+  SharedPreferences sharedUser = await SharedPreferences.getInstance();
+  Map decodeOptions = jsonDecode(jsonUser);
+  String user = jsonEncode(UserModel.fromJson(decodeOptions));
+  sharedUser.setString('user', user);
+  return true;
+}
+
+Future<UserModel> getUserData({bool ignoreSession = false}) async {
+  SharedPreferences sharedUser = await SharedPreferences.getInstance();
+  Map userMap = jsonDecode(sharedUser.getString('user'));
+  var user = UserModel.fromJson(userMap);
+  return user;
+}
+
+Future<bool> setToken({@required String token, @required String id}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setString("token", "Bearer " + token);
+  _prefs.setString("userId", id);
+  return true;
+}
+
+Future<bool> removeTokenSession() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setBool("session", false);
+  return true;
+}
+
+Future<bool> removeData() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setBool("session", false);
+  _prefs.setString("token", "");
+  _prefs.setString('user', "");
+  _prefs.setInt("id", -1);
+  _prefs.setBool("isLogin", false);
+  return true;
+}
+
+Future<String> getToken({bool ignoreSession = false}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  bool isSession = _prefs.getBool("session") ?? false;
+  if (isSession && !ignoreSession) _prefs.remove("token");
+
+  String token = _prefs.getString("token") ?? null;
+  return token;
+}
+
+Future<String> getUserId({bool ignoreSession = false}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  bool isSession = _prefs.getBool("session") ?? false;
+  if (isSession && !ignoreSession) _prefs.remove("token");
+
+  String token = _prefs.getString("userId") ?? null;
+  return token;
+}
+
+Future<bool> setId({@required int id}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setInt("id", id);
+  return true;
+}
+
+Future<int> getId() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  return _prefs.getInt("id") ?? -1;
+}
+
+Future<bool> setLoginKey({@required bool isLogin}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setBool("isLogin", isLogin);
+  return true;
+}
+
+Future<bool> getIsLogin() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  return _prefs.getBool("isLogin") ?? false;
+}
