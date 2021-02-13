@@ -1,0 +1,12 @@
+import 'FlushbarView.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
+launchURL({String url,BuildContext context}) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    flushBarView(context, 'Error', false);
+  }
+}
