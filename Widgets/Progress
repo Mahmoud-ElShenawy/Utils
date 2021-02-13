@@ -1,0 +1,23 @@
+Widget getProgress({bool wrap = false}) {
+  if (wrap) {
+    return Center(
+      heightFactor: 0,
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+      ),
+    );
+  }
+  return Stack(children: <Widget>[
+    Opacity(
+      opacity: 0.6,
+      child: Container(
+        color: Colors.grey,
+      ),
+    ),
+    Center(
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+      ),
+    )
+  ]);
+}
