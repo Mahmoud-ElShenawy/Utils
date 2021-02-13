@@ -1,0 +1,25 @@
+ 
+   String lat = "0.0", lang = "0.0";
+   
+ void handleLocation(LatLng latlang) async {
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(
+        Coordinates(latlang.latitude, latlang.longitude));
+    this.lang = latlang.longitude.toString();
+    this.lat = latlang.latitude.toString();
+    var first = addresses.first;
+    print("${first.featureName} : ${first.addressLine}");
+    setState(() {
+      _locationController.text = first.addressLine;
+    });
+  }
+  
+    void handleLocationFromMap(LatLng latlang)async{
+    var addresses = await Geocoder.local.findAddressesFromCoordinates(Coordinates(latlang.latitude,latlang.longitude));
+    this.model.lng=latlang.longitude.toString();
+    this.model.lat=latlang.latitude.toString();
+    setState(() {
+      locationController.text=addresses.first.addressLine;
+    });
+  }
+  
+  void showPlacePicker({BuildContext context,void onLocationPicked(LatLng address)}) async {}
