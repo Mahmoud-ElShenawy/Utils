@@ -1,0 +1,44 @@
+  List<DropdownMenuItem> dropDownList(List<dynamic> list) {
+    List<DropdownMenuItem> listItem = [];
+    for (var i = 0; i < list.length; i++) {
+      var newItem = DropdownMenuItem(
+        child: Text(list[i]),
+        value: i,
+      );
+      listItem.add(newItem);
+    }
+    return listItem;
+  }
+  
+    _selectDate(BuildContext context) async {
+    picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate, // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+
+    date = selectedDate.year.toString() +
+        "-" +
+        selectedDate.month.toString() +
+        "-" +
+        selectedDate.day.toString();
+  }
+  
+    getImage() async {
+    final _imageFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      image = File(_imageFile.path);
+    });
+  }
+  
+  class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
+}
+  
