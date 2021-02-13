@@ -12,6 +12,15 @@ bool isInputArabic(String input) {
   return regExp.hasMatch(input);
 }
 
+bool validateMobile(String value) {
+  String pattern = r'(^((?:[+?0?0?966]+)(?:\s?\d{2})(?:\s?\d{7}))$)';
+  RegExp regExp = new RegExp(pattern);
+  if (!regExp.hasMatch(value)) {
+    return false;
+  }
+  return true;
+}
+
 bool isValidResponse(int statusCode) {
 return statusCode >= 200 && statusCode <= 302;
 }
