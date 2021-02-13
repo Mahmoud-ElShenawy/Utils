@@ -1,0 +1,130 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'Config Singleton';
+import 'Data Model';
+
+Future<bool> saveUserData(AuthData data) async {
+  await setIsActive(isVerified: data.data.is_verified == 1);
+  await setToken(token: data.data.token);
+  await setId(id: data.data.id);
+  await setUserType(type: data.data.type);
+
+  return true;
+}
+
+Future<bool> setToken({@required String token, isSession = false}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setString("token", token);
+  _prefs.setBool("session", isSession);
+  return true;
+}
+
+Future<bool> removeTokenSession() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setBool("session", false);
+  return true;
+}
+
+Future<String> getToken({bool ignoreSession = false}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  bool isSession = _prefs.getBool("session") ?? false;
+  if (isSession && !ignoreSession) _prefs.remove("token");
+
+  String token = _prefs.getString("token") ?? null ;
+  return token;
+}
+
+Future<bool> setId({@required int id}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  _prefs.setInt("id", id);
+  return true;
+}
+
+Future<int> getId() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  return _prefs.getInt("id") ?? -1;
+}
+Future<int> getUserStatus() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  String token = await getToken();
+  bool isVerified = _prefs.getBool("verified") ?? false;
+  if (token == null || token.isEmpty) return UserStatus.NO_USER;
+
+  if (isVerified) {
+    int userType = await getUserType(dataType: DataTypes.USER_TYPE_INT);
+    if (userType == UserTypes.USER)
+      return UserStatus.VERIFIED_USER;
+    else
+      return UserStatus.VERIFIED_VENDOR;
+  }
+  return UserStatus.UNVERIFIED;
+}
+
+int userTypeToInt(String userType) {
+  switch (userType) {
+    case UserTypes.USER_STRING:
+      return UserTypes.USER;
+    case UserTypes.VENDOR_STRING:
+      return UserTypes.VENDOR;
+    default:
+      return -1;
+  }
+}
+
+String userTypeToString(int userType) {
+  switch (userType) {
+    case UserTypes.USER:
+      return UserTypes.USER_STRING;
+    case UserTypes.VENDOR:
+      return UserTypes.VENDOR_STRING;
+    default:
+      return "NO USER";
+  }
+}
+
+Future<bool> setUserType({@required String type}) async {
+  int userType = userTypeToInt(type);
+  if (userType != -1) {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setInt("userType", userType);
+  }
+  return true;
+}
+
+Future<dynamic> getUserType({DataTypes dataType}) async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  int userType = _prefs.getInt("userType");
+  print("from shared pref user type : $userType");
+  if (dataType == DataTypes.USER_TYPE_INT) return userType;
+
+  if (dataType == DataTypes.USER_TYPE_STRING) return userTypeToString(userType);
+}
+
+Future<String> getUserStatusName() async {
+  int status = await getUserStatus();
+  switch (status) {
+    case UserStatus.NO_USER:
+      return "No User";
+    case UserStatus.VERIFIED_USER:
+      return "User Verified";
+    case UserStatus.VERIFIED_VENDOR:
+      return "Vendor Verified";
+    case UserStatus.UNVERIFIED:
+      return "User UnVerified";
+  }
+  return "no User";
+}
+
+class UserStatus {
+  static const int VERIFIED_USER = 0;
+  static const int VERIFIED_VENDOR = 1;
+  static const int UNVERIFIED = 2;
+  static const int FORGET_PASSWORD_USER = 3;
+  static const int NO_USER = -1;
+}
+
+enum DataTypes {
+  USER_TYPE_STRING,
+  USER_TYPE_INT,
+}
+
