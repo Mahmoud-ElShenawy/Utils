@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'Dimens Singleton';
+import 'Loading Widget';
+
+class ShopinButton extends StatelessWidget {
+  Function onPressed ;
+  String text ;
+  TextStyle textStyle ;
+  double height  ;
+  Color color ;
+  bool isLoading ;
+  ShopinButton({this.onPressed , this.text , this.textStyle  , this.height= BUTTON_HEIGHT , this.color = Colors.white , this.isLoading = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(0),
+      child: isLoading ? Loading(): InkWell(
+        onTap: onPressed,
+        child: Container(
+          height: this.height,
+          color: this.color,
+          child: Center(
+            child: Text(this.text?? "" , style: this.textStyle ?? new TextStyle(color: Colors.black , fontSize: 16),),
+          ),
+        ),
+      ),
+    );
+  }
+}
