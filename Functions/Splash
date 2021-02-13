@@ -1,0 +1,11 @@
+  void splash() async {
+    await new Future.delayed(const Duration(seconds: 1));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString("token"));
+    if (prefs.getString("token") == null) {
+      'Naviagte to Login Screen'
+    } else {
+      loginState = true;
+      'Naviagte to Home Screen'
+    }
+  }
