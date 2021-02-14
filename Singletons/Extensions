@@ -1,0 +1,18 @@
+import 'package:flutter/widgets.dart';
+
+extension ContextExtensions on BuildContext{
+double get height => MediaQuery.of(this).size.height;
+double get width => MediaQuery.of(this).size.width;
+}
+
+extension StringExtensions on String {
+  int get wordsCount => this.trim().isEmpty ? 0 : string.trim().split(RegExp('(s|\\W)+')).length;
+}
+
+extension NumExtensions<T extends num> on T {
+  T  addTen() => this + 'Numeber enter here';
+}
+
+extension ListExtensions<T> on List<T> {
+  List<T> operator -() => reversed.toList();
+}
